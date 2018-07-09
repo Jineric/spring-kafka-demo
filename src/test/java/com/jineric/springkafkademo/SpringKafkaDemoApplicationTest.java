@@ -17,13 +17,13 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@DirtiesContext
+//@DirtiesContext
 public class SpringKafkaDemoApplicationTest {
 
-	private static final String HELLOWORLD_TOPIC = "helloworld.t";
+	private static final String BOOT_TOPIC = "boot.t";
+
 	@ClassRule
-	public static KafkaEmbedded embeddedKafka =
-			new KafkaEmbedded(1, true, HELLOWORLD_TOPIC);
+	public static KafkaEmbedded embeddedKafka = new KafkaEmbedded(1, true, BOOT_TOPIC);
 
 	@Autowired
 	private Receiver receiver;
@@ -33,7 +33,7 @@ public class SpringKafkaDemoApplicationTest {
 
 	@Test
 	public void testReceive() throws Exception {
-		sender.send(HELLOWORLD_TOPIC, "Hello Spring Kafka!");
+		sender.send(BOOT_TOPIC, "Hello Boot!");
 
 		receiver.getLatch().await(10000, TimeUnit.MILLISECONDS);
 		assertThat(receiver.getLatch().getCount()).isEqualTo(0);

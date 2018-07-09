@@ -1,14 +1,17 @@
 package com.jineric.springkafkademo.consumer;
 
 import java.util.concurrent.CountDownLatch;
+import java.util.function.Consumer;
 
+import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.kafka.annotation.KafkaListener;
+import org.springframework.stereotype.Component;
 
+@Component
 public class Receiver {
-    private static final Logger LOGGER =
-            LoggerFactory.getLogger(Receiver.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(Receiver.class);
 
     private CountDownLatch latch = new CountDownLatch(1);
 
@@ -16,9 +19,9 @@ public class Receiver {
         return latch;
     }
 
-    @KafkaListener(topics = "${kafka.topic.helloworld}")
-    public void receive(String payload) {
-        LOGGER.info("received payload='{}'", payload);
+    @KafkaListener(topics = "${kafka.topic.boot}")
+    public void receive(ConsumerRecord<?, ?> consumerRecord) {
+        LOGGER.info("received payload='{}'", consumerRecord.toString());
         latch.countDown();
     }
 }
