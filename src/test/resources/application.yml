@@ -1,10 +1,4 @@
-spring:
-  kafka:
-    bootstrap-servers: ${spring.embedded.kafka.brokers}
-    consumer:
-      auto-offset-reset: earliest
-      group-id: boot
-
 kafka:
+  bootstrap-servers: ${spring.embedded.kafka.brokers}
   topic:
-    boot: boot.t
+    json: json.t
